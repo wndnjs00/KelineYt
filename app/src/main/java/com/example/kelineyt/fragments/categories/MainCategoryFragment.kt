@@ -26,6 +26,9 @@ import com.example.kelineyt.viewmodel.MainCategoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
+
+// HomeFragment안에 있는 Home카테고리탭
+
 private val TAG = "MainCategoryFragment"
 
 @AndroidEntryPoint
@@ -37,6 +40,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
     private lateinit var bestProductsAdapter: BestProductsAdapter
     private val viewModel by viewModels<MainCategoryViewModel>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,9 +50,11 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //리사이클러뷰 설정
         setupSpecialProductsRv()
         setupBestDealsRv()
         setupBestProducts()
@@ -69,6 +75,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
 
 
+
         lifecycleScope.launchWhenStarted {
             viewModel.specialProducts.collectLatest {
                 when (it) {
@@ -76,10 +83,12 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                         showLoading()
                     }
                     is Resource.Success -> {
+                        //목록 업데이트
                         specialProductsAdapter.differ.submitList(it.data)
                         hideLoading()
                     }
                     is Resource.Error -> {
+                        //로딩숨기고, 오류메시지 띄움
                         hideLoading()
                         Log.e(TAG, it.message.toString())
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -88,6 +97,8 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 }
             }
         }
+
+
 
         lifecycleScope.launchWhenStarted {
             viewModel.bestDealsProducts.collectLatest {
@@ -96,10 +107,12 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                         showLoading()
                     }
                     is Resource.Success -> {
+                        //목록 업데이트
                         bestDealsAdapter.differ.submitList(it.data)
                         hideLoading()
                     }
                     is Resource.Error -> {
+                        //로딩숨기고, 오류메시지 띄움
                         hideLoading()
                         Log.e(TAG, it.message.toString())
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -109,6 +122,8 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             }
         }
 
+
+
         lifecycleScope.launchWhenStarted {
             viewModel.bestProducts.collectLatest {
                 when (it) {
@@ -116,12 +131,14 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                         binding.bestProductsProgressbar.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
+                        //목록 업데이트
                         bestProductsAdapter.differ.submitList(it.data)
                         binding.bestProductsProgressbar.visibility = View.GONE
 
 
                     }
                     is Resource.Error -> {
+                        //로딩숨기고, 오류메시지 띄움
                         Log.e(TAG, it.message.toString())
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         binding.bestProductsProgressbar.visibility = View.GONE
@@ -139,6 +156,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         })
     }
 
+
     private fun setupBestProducts() {
         bestProductsAdapter = BestProductsAdapter()
         binding.rvBestProducts.apply {
@@ -147,6 +165,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             adapter = bestProductsAdapter
         }
     }
+
 
     private fun setupBestDealsRv() {
         bestDealsAdapter = BestDealsAdapter()
@@ -157,14 +176,17 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
     }
 
+    //progressbar 숨김
     private fun hideLoading() {
         binding.mainCategoryProgressbar.visibility = View.GONE
     }
 
+    //progressbar 보이게
     private fun showLoading() {
         binding.mainCategoryProgressbar.visibility = View.VISIBLE
 
     }
+
 
     private fun setupSpecialProductsRv() {
         specialProductsAdapter = SpecialProductsAdapter()
@@ -174,6 +196,7 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
             adapter = specialProductsAdapter
         }
     }
+
 
     override fun onResume() {
         super.onResume()

@@ -26,23 +26,33 @@ class IntroductionViewModel @Inject constructor(
         const val ACCOUNT_OPTIONS_FRAGMENT = R.id.action_introductionFragment_to_accountOptionsFragment
     }
 
+
+    //로그인을 하고 앱을 나갔다 들어오면, ShoppingActivity로 바로 이동하게(IntroductionFragment와 연결)
+    //버튼이 클릭되었는지 or 사용자가 이미 시작했는지 체크
     init {
         val isButtonClicked = sharedPreferences.getBoolean(INTRODUCTION_KEY,false)
+        //사용자가 이미 로그인했는지 체크
         val user = firebaseAuth.currentUser
 
         if (user != null){
+            //SHOPPING_ACTIVITY으로 내보내기
             viewModelScope.launch {
                 _navigate.emit(SHOPPING_ACTIVITY)
             }
+
         }else if (isButtonClicked){
+            //ACCOUNT_OPTIONS_FRAGMENT으로 내보내기
             viewModelScope.launch {
                 _navigate.emit(ACCOUNT_OPTIONS_FRAGMENT)
             }
+
         }else{
+            //아무활동도 하지않음
             Unit
         }
     }
 
+    //기본설정 변경 함수
     fun startButtonClick(){
         sharedPreferences.edit().putBoolean(INTRODUCTION_KEY,true).apply()
     }

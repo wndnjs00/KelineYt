@@ -21,13 +21,13 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-             />
+            />
 
         <TextView
             android:id="@+id/tvSpecialProductName"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="Scotch Premium"
+            android:text="Premium 제품"
             app:layout_constraintStart_toEndOf="@id/imageSpecialRvItem"
             app:layout_constraintTop_toTopOf="@id/imageSpecialRvItem"
             android:layout_marginTop="7dp"
@@ -42,7 +42,7 @@
             android:id="@+id/tvSpecialPrdouctPrice"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="$1600"
+            android:text="15,000원"
             app:layout_constraintStart_toStartOf="@id/tvSpecialProductName"
             app:layout_constraintTop_toBottomOf="@id/tvSpecialProductName"
             android:textColor="@color/black"
@@ -55,7 +55,7 @@
             android:layout_height="25dp"
             android:background="@drawable/blue_background"
             android:fontFamily="@font/poppins_light"
-            android:text="Add to cart"
+            android:text="장바구니 추가"
             android:textColor="@color/white"
             android:textSize="10sp"
             android:textStyle="bold"

@@ -54,24 +54,26 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
 
+        // tvForgotPasswordLogin 버튼클릭시
         binding.tvForgotPasswordLogin.setOnClickListener {
+            //dialog 호출
             setupBottomSheetDialog { email ->
                 viewModel.resetPassword(email)
             }
         }
 
 
-        //코루틴
+        //실제흐름수집(코루틴)
         lifecycleScope.launchWhenStarted {
             viewModel.resetPassword.collect{
                 when (it) {
                     is Resource.Loading -> {
                     }
                     is Resource.Success -> {
-                        Snackbar.make(requireView(),"Reset link was sent to your email",Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(requireView(),"링크가 귀하의 이메일로 전송되었습니다",Snackbar.LENGTH_LONG).show()
                     }
                     is Resource.Error -> {
-                        Snackbar.make(requireView(),"Error: ${it.message}",Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(requireView(),"오류: ${it.message}",Snackbar.LENGTH_LONG).show()
                     }
                     else -> Unit
 
@@ -79,6 +81,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
 
+        //실제흐름수집(코루틴)
         lifecycleScope.launchWhenStarted {
             viewModel.login.collect {
                 when (it) {

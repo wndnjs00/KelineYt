@@ -1,7 +1,6 @@
 package com.example.kelineyt.adapters
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,19 +14,25 @@ import com.example.kelineyt.helper.getProductPrice
 
 class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProductsViewHolder>() {
 
-    inner class BestProductsViewHolder(private val binding: ProductRvItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class BestProductsViewHolder(private val binding: ProductRvItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
-                val priceAfterOffer = product.offerPercentage.getProductPrice(product.price)
-                tvNewPrice.text = "$ ${String.format("%.2f", priceAfterOffer)}"
-                tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                if (product.offerPercentage == null)
-                    tvNewPrice.visibility = View.INVISIBLE
 
-                Glide.with(itemView).load(product.images[0]).into(imgProduct)
-                tvPrice.text = "$ ${product.price}"
-                tvName.text = product.name
+                //백분율계산
+                val priceAfterOffer = product.offerPercentage.getProductPrice(product.price)
+                tvNewPrice.text = "${String.format("%.2f", priceAfterOffer)}원"
+                tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG     //기존가격에 선표시
+
+
+                //원래가격 숨기기
+                if (product.offerPercentage == null) {
+                    tvNewPrice.visibility = View.INVISIBLE
+                }
+
+
+                Glide.with(itemView).load(product.images[0]).into(imgProduct)    //이미지 가져옴
+                tvPrice.text = "$ ${product.price}"      //원래가격
+                tvName.text = product.name      //제품 이름
             }
 
         }
@@ -54,6 +59,8 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
         )
     }
 
+
+
     override fun onBindViewHolder(holder: BestProductsViewHolder, position: Int) {
         val product = differ.currentList[position]
         holder.bind(product)
@@ -63,9 +70,11 @@ class BestProductsAdapter : RecyclerView.Adapter<BestProductsAdapter.BestProduct
         }
     }
 
+
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
+
 
     var onClick: ((Product) -> Unit)? = null
 

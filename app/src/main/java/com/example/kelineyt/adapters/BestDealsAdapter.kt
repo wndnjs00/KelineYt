@@ -1,6 +1,5 @@
 package com.example.kelineyt.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -16,14 +15,15 @@ class BestDealsAdapter : RecyclerView.Adapter<BestDealsAdapter.BestDealsViewHold
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
-                Glide.with(itemView).load(product.images[0]).into(imgBestDeal)
+                Glide.with(itemView).load(product.images[0]).into(imgBestDeal)  //이미지 가져옴
+                //백분율계산
                 product.offerPercentage?.let {
                     val remainingPricePercentage = 1f - it
                     val priceAfterOffer = remainingPricePercentage * product.price
-                    tvNewPrice.text = "$ ${String.format("%.2f",priceAfterOffer)}"
+                    tvNewPrice.text = "${String.format("%.2f",priceAfterOffer)}원"
                 }
-                tvOldPrice.text = "$ ${product.price}"
-                tvDealProductName.text = product.name
+                tvOldPrice.text = "${product.price}원"   //원래가격
+                tvDealProductName.text = product.name   //제품 이름
             }
         }
     }

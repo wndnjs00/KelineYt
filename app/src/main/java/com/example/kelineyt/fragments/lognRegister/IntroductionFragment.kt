@@ -35,6 +35,8 @@ class IntroductionFragment : Fragment(R.layout.fragment_introdcution) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        //로그인을 하고 앱을 나갔다 들어오면, ShoppingActivity로 바로 이동하게(IntroductionViewModle과 연결)
         lifecycleScope.launchWhenStarted {
             viewModel.navigate.collect {
                 when (it) {
@@ -55,6 +57,7 @@ class IntroductionFragment : Fragment(R.layout.fragment_introdcution) {
         }
 
         binding.buttonStart.setOnClickListener {
+            //사용자가 buttonStart버튼 클릭할때마다 기본설정내부값 변경
             viewModel.startButtonClick()
             findNavController().navigate(R.id.action_introductionFragment_to_accountOptionsFragment)
         }

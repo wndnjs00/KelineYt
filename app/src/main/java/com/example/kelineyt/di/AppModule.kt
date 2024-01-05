@@ -15,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+//입력시 앱 모듈클릭?
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -28,10 +29,13 @@ object AppModule {
     @Singleton
     fun provideFirebaseFirestoreDatabase() = Firebase.firestore
 
+
+    //맨처음 start화면 한번나오고 사라지게(앱에만 적용)
     @Provides
     fun provideIntroductionSP(
         application: Application
     ) = application.getSharedPreferences(INTRODUCTION_SP, MODE_PRIVATE)
+
 
     @Provides
     @Singleton
@@ -39,6 +43,7 @@ object AppModule {
         firebaseAuth: FirebaseAuth,
         firestore: FirebaseFirestore
     ) = FirebaseCommon(firestore,firebaseAuth)
+
 
     @Provides
     @Singleton

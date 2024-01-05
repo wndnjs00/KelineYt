@@ -1,5 +1,7 @@
 package com.example.kelineyt.activities
 
+//얘가 최종
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kelineyt.R

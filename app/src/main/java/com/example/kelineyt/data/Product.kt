@@ -3,6 +3,8 @@ package com.example.kelineyt.data
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+
+//상품 등록 데이터
 @Parcelize
 data class Product(
     val id: String,

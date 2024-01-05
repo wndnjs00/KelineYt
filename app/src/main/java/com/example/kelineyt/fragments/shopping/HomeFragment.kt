@@ -36,13 +36,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             FurnitureFragment()
         )
 
+        //스와이프가 잘 작동되도록
         binding.viewpagerHome.isUserInputEnabled = false
 
+
+        //여기서 어뎁터인스턴스 만들고, 탭레이아웃으로 설정
         val viewPager2Adapter =
             HomeViewpagerAdapter(categoriesFragments, childFragmentManager, lifecycle)
         binding.viewpagerHome.adapter = viewPager2Adapter
         TabLayoutMediator(binding.tabLayout, binding.viewpagerHome) { tab, position ->
             when (position) {
+                //탭하여 해당 텍스트로 이동하도록
                 0 -> tab.text = "Main"
                 1 -> tab.text = "Chair"
                 2 -> tab.text = "Cupboard"
@@ -50,6 +54,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 4 -> tab.text = "Accessory"
                 5 -> tab.text = "Furniture"
             }
-        }.attach()
+        }.attach()  //텝 레이아웃을 뷰호출기에 연결
     }
 }

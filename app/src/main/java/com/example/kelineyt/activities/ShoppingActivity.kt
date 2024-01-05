@@ -28,8 +28,12 @@ class ShoppingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
+        // ShoppingActivity에 하단네비게이션 추가
         val navController = findNavController(R.id.shoppingHostFragment)
         binding.bottomNavigation.setupWithNavController(navController)
+
+
 
         lifecycleScope.launchWhenStarted {
             viewModel.cartProducts.collectLatest {

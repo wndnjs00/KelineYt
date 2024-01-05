@@ -17,15 +17,18 @@ class LoginViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
+
     //UI 이벤트
+
+    //로그인
     private val _login = MutableSharedFlow<Resource<FirebaseUser>>()
     val login = _login.asSharedFlow()
-
+    //스낵바표시(성공할떄만)
     private val _resetPassword = MutableSharedFlow<Resource<String>>()
     val resetPassword = _resetPassword.asSharedFlow()
 
 
-
+    //로그인
     fun login(email: String, password: String) {
         viewModelScope.launch { _login.emit(Resource.Loading()) }
         firebaseAuth.signInWithEmailAndPassword(
@@ -43,11 +46,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    //비밀번호 재설정
     fun resetPassword(email: String) {
         viewModelScope.launch {
             _resetPassword.emit(Resource.Loading())
         }
 
+        //firebaseAuth를 사용해서 비밀번호 재설정
         firebaseAuth
             .sendPasswordResetEmail(email)
             .addOnSuccessListener {
